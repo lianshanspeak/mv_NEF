@@ -23,9 +23,14 @@ class NEFCopierApp(QtWidgets.QWidget):
         self.copy_button = QtWidgets.QPushButton('开始拷贝', self)
         self.copy_button.clicked.connect(self.copy_nef_to_target)
 
+        self.source_label = QtWidgets.QLabel('源文件夹: 未选择', self)
+        self.target_label = QtWidgets.QLabel('目标文件夹: 未选择', self)
+
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(self.source_button)
+        layout.addWidget(self.source_label)
         layout.addWidget(self.target_button)
+        layout.addWidget(self.target_label)
         layout.addWidget(self.copy_button)
 
         self.setLayout(layout)
@@ -34,12 +39,12 @@ class NEFCopierApp(QtWidgets.QWidget):
     def select_source_folder(self):
         self.source_folder = QFileDialog.getExistingDirectory(self, "选择源文件夹")
         if self.source_folder:
-            QMessageBox.information(self, "选择源文件夹", f"源文件夹: {self.source_folder}")
+            self.source_label.setText(f"源文件夹: {self.source_folder}")
 
     def select_target_folder(self):
         self.target_folder = QFileDialog.getExistingDirectory(self, "选择目标文件夹")
         if self.target_folder:
-            QMessageBox.information(self, "选择目标文件夹", f"目标文件夹: {self.target_folder}")
+            self.target_label.setText(f"目标文件夹: {self.target_folder}")
 
     def copy_nef_to_target(self):
         if not self.source_folder or not self.target_folder:
